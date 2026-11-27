@@ -1,10 +1,55 @@
 @import "tailwindcss";
 
+/*
+ * Design token sementara (dokumen desain PTF-23 bagian 2).
+ * Ganti nilai di sini untuk menyesuaikan brand asli; komponen tidak memakai hex langsung.
+ */
+@theme {
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #dce7fe;
+  --color-brand-500: #3b6ff6;
+  --color-brand-600: #2453e0;
+  --color-brand-700: #1d41b5;
+  --color-brand-900: #172b6b;
+  --color-accent-500: #f59e0b;
+  --color-ink-900: #0f172a;
+  --color-ink-600: #475569;
+  --color-ink-500: #64748b;
+  --color-ink-300: #cbd5e1;
+  --color-ink-100: #f1f5f9;
+  --color-success-700: #15803d;
+  --color-warning-700: #b45309;
+  --color-danger-700: #b91c1c;
+  --color-whatsapp: #25d366;
+
+  --radius-card: 16px;
+  --radius-control: 10px;
+
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.06), 0 4px 16px rgb(15 23 42 / 0.06);
+  --shadow-card-hover: 0 2px 4px rgb(15 23 42 / 0.08), 0 12px 28px rgb(15 23 42 / 0.1);
+}
+
 @theme inline {
-  --font-sans: var(--font-geist-sans);
+  --font-heading: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  background: #ffffff;
-  color: #171717;
+  background: var(--color-white, #ffffff);
+  color: var(--color-ink-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

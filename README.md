@@ -39,6 +39,31 @@ Skema ada di `src/lib/db/schema.ts`, migrasi SQL di `drizzle/`.
 
 Pendaftaran publik ditutup. Akun admin hanya dibuat lewat `npm run admin:create`. Detail ada di [docs/TECHNICAL.md](docs/TECHNICAL.md).
 
+## Panduan pemakaian admin
+
+Buka `/admin` lalu masuk dengan email dan password akun admin. Setelah salah memasukkan password 5 kali dalam 1 menit, login dikunci sementara selama 1 menit. Gunakan tombol **Keluar** di kanan atas setelah selesai.
+
+| Menu | Fungsi |
+| --- | --- |
+| Dasbor | Ringkasan jumlah lead baru, proyek, layanan, testimoni, dan 5 lead terbaru |
+| Leads | Daftar permintaan penawaran dari formulir Kontak. Klik nama untuk melihat detail, membuka WhatsApp, mengubah status (Baru, Dihubungi, Negosiasi, Deal, Batal), dan menulis catatan internal |
+| Portofolio | Tambah, ubah, atau hapus proyek beserta gambar sampul. Galeri gambar ditambahkan di halaman ubah proyek setelah proyek disimpan (satu gambar per unggahan) |
+| Layanan | Tambah, ubah, atau hapus layanan beserta ikonnya |
+| Testimoni | Tambah, ubah, atau hapus testimoni. Isi hanya dengan testimoni asli yang sudah diizinkan klien |
+| Teks Halaman | Judul dan subjudul Beranda, bagian Proses Kerja, dan isi Tentang Kami |
+| Kontak | Nomor WhatsApp, email, telepon, alamat, dan tautan media sosial |
+| SEO | Nama situs, judul dan deskripsi untuk Google, serta gambar saat tautan dibagikan |
+
+Catatan:
+
+- Konten baru baru tampil di situs jika kotak **Tayangkan di situs** dicentang. Tanpa centang, konten disimpan sebagai draf.
+- Perubahan langsung tampil di situs setelah tombol Simpan ditekan.
+- Gambar: JPG, PNG, WEBP, atau AVIF, maksimal 4 MB. Gambar lama otomatis dihapus dari penyimpanan saat diganti atau dihapus.
+- Teks bertanda `[CONTOH]` adalah placeholder dan perlu diganti dengan isi asli.
+- Nomor WhatsApp boleh ditulis `0812...`, `+62812...`, atau `62812...`; sistem menyimpannya sebagai `62812...`.
+
+Untuk developer: setiap Server Action admin (`src/app/admin/**/actions.ts`, `settings-actions.ts`) wajib diawali `await requireAdmin();`, memvalidasi input di server (`src/lib/admin/validate.ts`), lalu memanggil `updateTag()` dengan tag dari `src/lib/cache-tags.ts`.
+
 ## Aturan repo (publik)
 
 - Jangan commit `.env*` (kecuali `.env.example` tanpa nilai), token, password, atau data internal.

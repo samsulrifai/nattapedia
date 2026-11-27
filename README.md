@@ -2,7 +2,7 @@
 
 Website company profile Nattapedia: landing page, layanan, portofolio, kontak (formulir minta penawaran), dan halaman admin untuk mengelola konten.
 
-Stack: Next.js 16 (App Router, TypeScript) + Tailwind CSS 4, Supabase (Postgres, Storage, Auth), dideploy ke Vercel. Detail lengkap ada di [docs/TECHNICAL.md](docs/TECHNICAL.md).
+Stack: Next.js 16 (App Router, TypeScript) + Tailwind CSS 4, Neon Postgres + Drizzle ORM, Better Auth (login admin), Cloudflare R2 (gambar), dideploy ke Vercel. Detail lengkap ada di [docs/TECHNICAL.md](docs/TECHNICAL.md).
 
 ## Menjalankan lokal
 
@@ -26,9 +26,18 @@ Tanpa `.env.local`, halaman publik tetap jalan dengan placeholder, dan area `/ad
 | `npm run lint` | ESLint |
 | `npm run typecheck` | generate tipe route + pemeriksaan TypeScript |
 
-## Database
+## Database dan admin
 
-Skema dan kebijakan RLS ada di `supabase/migrations/`. Jalankan lewat Supabase SQL Editor atau `supabase db push`. Akun admin dibuat manual di Supabase Dashboard, lalu `user_id`-nya dimasukkan ke tabel `admin_users`.
+Skema ada di `src/lib/db/schema.ts`, migrasi SQL di `drizzle/`.
+
+| Perintah | Fungsi |
+| --- | --- |
+| `npm run db:generate` | membuat file migrasi baru setelah skema diubah |
+| `npm run db:migrate` | menjalankan migrasi ke database (`.env.local`) |
+| `npm run db:studio` | melihat isi database (Drizzle Studio) |
+| `npm run admin:create` | membuat akun admin atau reset password (interaktif) |
+
+Pendaftaran publik ditutup. Akun admin hanya dibuat lewat `npm run admin:create`. Detail ada di [docs/TECHNICAL.md](docs/TECHNICAL.md).
 
 ## Aturan repo (publik)
 

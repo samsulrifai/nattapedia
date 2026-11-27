@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { getAdminSession } from "@/lib/auth/session";
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
-// Gerbang kedua setelah proxy: user harus login DAN terdaftar di admin_users.
+// Gerbang kedua setelah proxy: sesi divalidasi ke database (Better Auth).
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <Suspense fallback={<p className="p-4">Memuat...</p>}>
@@ -16,16 +16,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 }
 
 async function AdminGate({ children }: { children: React.ReactNode }) {
-  const supabase = await createClient();
-  if (!supabase) redirect("/admin/login");
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect("/admin/login");
-
-  const { data: isAdmin } = await supabase.rpc("is_admin");
-  if (!isAdmin) redirect("/admin/login");
+  const session = await getAdminSession();
+  if (!session) redirect("/admin/login");
 
   return (
     <div className="flex min-h-full flex-col">
